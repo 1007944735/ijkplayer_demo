@@ -68,4 +68,7 @@ public class SecondActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
+    public void stop(View view) {
+    }
 }

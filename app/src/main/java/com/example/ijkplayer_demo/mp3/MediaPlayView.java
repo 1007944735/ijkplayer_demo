@@ -374,8 +374,11 @@ public class MediaPlayView extends FrameLayout implements TextureView.SurfaceTex
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         //这里可能有问题
-        mService.unRegisterListener(mStatusListener);
-        mService.unRegisterListener(mProgressListener);
+        if (mService != null) {
+            mService.unRegisterListener(mStatusListener);
+            mService.unRegisterListener(mProgressListener);
+            Log.d("TAG", "onDetachedFromWindow: ");
+        }
         releaseAnim(topEnterAnim);
         releaseAnim(topExitAnim);
         releaseAnim(bottomEnterAnim);
@@ -458,6 +461,7 @@ public class MediaPlayView extends FrameLayout implements TextureView.SurfaceTex
         @Override
         public void progress(long position, long duration, long buffer, long speed) {
             sbVideoProgress.setProgress((int) (position / 1000));
+            sbVideoProgress.setMax((int) (duration / 1000));
             tvVideoTime.setText(formatTime(position) + "/" + formatTime(duration));
             sbVideoProgress.setSecondaryProgress((int) buffer);
             if (tvVideoSpeed.getVisibility() == VISIBLE) {

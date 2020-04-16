@@ -121,7 +121,7 @@ public class MediaService extends Service {
     }
 
     public <T> void playWithUrl(String url, T t) {
-        playWithUrl(url, true,t);
+        playWithUrl(url, true, t);
     }
 
     public <T> void playWithUrl(String url, boolean autoPlay, T t) {
@@ -180,7 +180,7 @@ public class MediaService extends Service {
 
     public void seekTo(long position) {
         if (mediaPlayer != null) {
-            if (mediaPlayer.isPlayable()) {
+            if (mediaPlayer.isPlaying()) {
                 mediaPlayer.seekTo(position);
             } else {
                 needSeekTo = true;
@@ -200,6 +200,13 @@ public class MediaService extends Service {
             mSurface = surface;
             mediaPlayer.setSurface(surface);
         }
+    }
+
+    public long getCurrentPostion() {
+        if (mediaPlayer != null) {
+            return mediaPlayer.getCurrentPosition();
+        }
+        return 0;
     }
 
     public MediaInfo getMediaInfo() {
@@ -229,7 +236,7 @@ public class MediaService extends Service {
             mediaInfo.setWidth(mediaPlayer.getVideoWidth());
             mediaInfo.setHeight(mediaPlayer.getVideoHeight());
             mediaInfo.setAspectVideo(mediaPlayer.getVideoWidth() / mediaPlayer.getVideoHeight());
-            Log.d("TAG", "onPrepared: "+mediaPlayer.getVideoWidth()+"|"+mediaPlayer.getVideoHeight());
+            Log.d("TAG", "onPrepared: " + mediaPlayer.getVideoWidth() + "|" + mediaPlayer.getVideoHeight());
             if (autoPlay) {
                 play();
             }
