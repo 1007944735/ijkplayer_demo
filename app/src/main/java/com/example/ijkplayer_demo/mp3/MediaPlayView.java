@@ -397,6 +397,7 @@ public class MediaPlayView extends FrameLayout implements TextureView.SurfaceTex
     private MediaService.MediaPlayStatusListener mStatusListener = new MediaService.MediaPlayStatusListener() {
         @Override
         public void onStatusChange(int status) {
+            Log.d("TAG", "onStatusChange: " + status);
             switch (status) {
                 case MediaService.STATE_IDLE:
                     ivVideoPlay.setImageResource(R.mipmap.ico_video_play);

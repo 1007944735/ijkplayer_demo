@@ -110,6 +110,9 @@ public class MediaService extends Service {
         }
         mediaPlayer.reset();
         notifyAllListeners(STATE_IDLE);
+        if (mSurface != null) {
+            setSurface(mSurface);
+        }
         mediaPlayer.setOnPreparedListener(mOnPreparedListener);
         mediaPlayer.setOnCompletionListener(mOnCompletionListener);
         mediaPlayer.setOnErrorListener(mOnErrorListener);
@@ -164,7 +167,9 @@ public class MediaService extends Service {
                 needSeekTo = false;
             }
             mediaPlayer.start();
+//            if (mediaStatus == STATE_PAUSED) {
             notifyAllListeners(STATE_PLAYING);
+//            }
         }
     }
 
@@ -278,7 +283,9 @@ public class MediaService extends Service {
                     break;
                 case IMediaPlayer.MEDIA_INFO_BUFFERING_END:
                     Log.d("TAG", "MEDIA_INFO_BUFFERING_END:");
-                    notifyAllListeners(STATE_PLAYING);
+                    if (mediaStatus != STATE_PAUSED && mediaStatus != STATE_ERROR) {
+                        notifyAllListeners(STATE_PLAYING);
+                    }
                     break;
                 case IMediaPlayer.MEDIA_INFO_NETWORK_BANDWIDTH:
                     Log.d("TAG", "MEDIA_INFO_NETWORK_BANDWIDTH: " + i1);

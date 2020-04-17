@@ -40,7 +40,7 @@ public class SecondActivity extends AppCompatActivity {
     public void play1(View view) {
         if (service != null) {
             display.bindMediaService(service);
-//            service.playWithUrl("http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4", true,"1");
+            service.playWithUrl("http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4", true,"1");
         }
     }
 
