@@ -123,18 +123,16 @@ public class MediaService extends Service {
         mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "start-on-prepared", 0);
     }
 
-    public <T> void playWithUrl(String url, T t) {
-        playWithUrl(url, true, t);
+    public void playWithUrl(String url) {
+        playWithUrl(url, true);
     }
 
-    public <T> void playWithUrl(String url, boolean autoPlay, T t) {
+    public void playWithUrl(String url, boolean autoPlay) {
+        mediaInfo.reset();
         mediaInfo.setUrl(url);
-        mediaInfo.setData(t);
         this.autoPlay = autoPlay;
         try {
-            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                mediaPlayer.pause();
-            }
+            pause();
             initMediaPlayer();
             mediaPlayer.setDataSource(url);
             if (mSurface != null) {
@@ -167,9 +165,7 @@ public class MediaService extends Service {
                 needSeekTo = false;
             }
             mediaPlayer.start();
-//            if (mediaStatus == STATE_PAUSED) {
             notifyAllListeners(STATE_PLAYING);
-//            }
         }
     }
 
@@ -218,6 +214,12 @@ public class MediaService extends Service {
         return mediaInfo;
     }
 
+    public void setAudioData(Object o) {
+        if (mediaInfo != null) {
+            mediaInfo.setData(o);
+        }
+    }
+
     public void setSpeed(float speed) {
         if (speed > 0 && mediaPlayer != null) {
             delayMillis = (long) (delayMillis / speed);
@@ -240,8 +242,9 @@ public class MediaService extends Service {
             mediaInfo.setDuration(mediaPlayer.getDuration());
             mediaInfo.setWidth(mediaPlayer.getVideoWidth());
             mediaInfo.setHeight(mediaPlayer.getVideoHeight());
-            mediaInfo.setAspectVideo(mediaPlayer.getVideoWidth() / mediaPlayer.getVideoHeight());
-            Log.d("TAG", "onPrepared: " + mediaPlayer.getVideoWidth() + "|" + mediaPlayer.getVideoHeight());
+            if (mediaInfo.getWidth() != 0 && mediaInfo.getHeight() != 0) {
+                mediaInfo.setAspectVideo(mediaPlayer.getVideoWidth() * 1.0f / mediaPlayer.getVideoHeight());
+            }
             if (autoPlay) {
                 play();
             }

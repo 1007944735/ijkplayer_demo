@@ -175,7 +175,7 @@ public class MediaPlayView extends FrameLayout implements TextureView.SurfaceTex
                     if (mService.isPlaying()) {
                         mService.pause();
                     } else if (mService.getMediaStatus() == MediaService.STATE_FINISH || mService.getMediaStatus() == MediaService.STATE_ERROR) {
-                        mService.playWithUrl(mediaInfo.getUrl(), "1");
+                        mService.playWithUrl(mediaInfo.getUrl());
                     } else {
                         mService.play();
                     }
@@ -222,7 +222,7 @@ public class MediaPlayView extends FrameLayout implements TextureView.SurfaceTex
                     if (mService.isPlaying()) {
                         mService.pause();
                     } else if (mService.getMediaStatus() == MediaService.STATE_FINISH || mService.getMediaStatus() == MediaService.STATE_ERROR) {
-                        mService.playWithUrl(mediaInfo.getUrl(), "1");
+                        mService.playWithUrl(mediaInfo.getUrl());
                     } else {
                         mService.play();
                     }
@@ -346,9 +346,7 @@ public class MediaPlayView extends FrameLayout implements TextureView.SurfaceTex
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         mSurface = surface;
         if (mService != null) {
-            if (mediaInfo == null) {
-                mediaInfo = mService.getMediaInfo();
-            }
+            mediaInfo = mService.getMediaInfo();
             initControlState();
             fitDisplaySize(this.width, this.height, mediaInfo.getWidth(), mediaInfo.getHeight());
             mService.setSurface(new Surface(surface));

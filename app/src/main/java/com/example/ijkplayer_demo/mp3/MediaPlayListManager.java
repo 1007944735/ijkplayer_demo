@@ -84,7 +84,7 @@ public class MediaPlayListManager {
         }
         //自己的逻辑
         if (mService != null) {
-            mService.playWithUrl(playList.get(position), "");
+            mService.playWithUrl(playList.get(position));
         }
     }
 
@@ -103,7 +103,7 @@ public class MediaPlayListManager {
         }
         //自己的逻辑
         if (mService != null) {
-            mService.playWithUrl(playList.get(position), "");
+            mService.playWithUrl(playList.get(position));
         }
     }
 
@@ -114,7 +114,7 @@ public class MediaPlayListManager {
         this.position = position;
         if (mService != null) {
             //自己的逻辑
-            mService.playWithUrl(playList.get(position), "");
+            mService.playWithUrl(playList.get(position));
         }
     }
 

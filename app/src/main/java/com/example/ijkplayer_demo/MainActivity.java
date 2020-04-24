@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void play1(View view) {
-        service.playWithUrl("http://test10.jy365.net/lessionnew/mp4/wksz180709212.mp4" ,true,"1");
+        service.playWithUrl("http://test10.jy365.net/lessionnew/mp4/wksz180709212.mp4" ,true);
     }
 
     public void play2(View view) {

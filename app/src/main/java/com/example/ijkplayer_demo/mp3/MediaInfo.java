@@ -69,6 +69,9 @@ public class MediaInfo {
         url = "";
         type = "";
         duration = 0;
-
+        width = 0;
+        height = 0;
+        aspectVideo = 0.0f;
+        data = null;
     }
 }
