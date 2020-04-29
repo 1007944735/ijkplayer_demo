@@ -51,7 +51,8 @@ public class MediaService extends Service {
         }
     };
 
-    private UploadProgressManager mUploadProgressManager;
+    private IUploadDownManager iUploadDownManager;
+    private IMediaPlayListManager iMediaPlayListManager;
 
 
     @Nullable
@@ -73,7 +74,10 @@ public class MediaService extends Service {
         timerHandler = new Handler();
         mStatusListeners = new ArrayList<>();
         mProgressListeners = new ArrayList<>();
-        mUploadProgressManager = new UploadProgressManager(this);
+        iUploadDownManager = new UploadDownManager();
+        iUploadDownManager.bindService(this);
+        iMediaPlayListManager = MediaPlayListManager.getInstance();
+        iMediaPlayListManager.bindService(this);
     }
 
     @Override
@@ -376,14 +380,14 @@ public class MediaService extends Service {
 
     private void notifyAllListeners(int status) {
         mediaStatus = status;
-        mUploadProgressManager.stateChange(status);
+        iUploadDownManager.stateChange(status);
         for (MediaPlayStatusListener listener : mStatusListeners) {
             listener.onStatusChange(status);
         }
     }
 
     private void notifyAllListeners(long position, long duration, long buffer, long speed) {
-        mUploadProgressManager.upload(position, duration, buffer, speed);
+        iUploadDownManager.upload(position, duration, buffer, speed);
         for (MediaPlayProgressListener listener : mProgressListeners) {
             listener.progress(position, duration, buffer, speed);
         }
